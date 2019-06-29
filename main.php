@@ -1,55 +1,61 @@
 <?php
 
 session_start();
-$_SESSION['username']=$_POST['username'];
 
-$login = $_SESSION['username'];
-
-echo $login;
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-$name ="";
-$pass ="";
-
-if (isset($_POST['username']) === true && isset($_POST['pass']) === true) 
-    {
-    $name = $_POST['username'];
-    $pass = $_POST['pass'];
-    
-    require_once 'public/connection.php';
-    
-    $sql = "SELECT id, username, hash_password FROM Users";
-    $result = $connection->query($sql);
-    
-    $table = $result->fetchAll(PDO::FETCH_ASSOC);
-    print_r($table);
-    
-    
-   
-    foreach($result as $row) {
-
-    // Wypisz na ekran dane
-    echo(" id: " . $row['id']);
-    echo "<br>";
-    echo(" login: " . $row['username']); 
-    echo "<br>";
-    echo (" hasło: " . $row['hash_password']) ;
-    echo "<br>";
-
-}
-    
-    
-
-    echo "  $name + $pass";
-
-} 
-
-else {
-
-echo 'nie ma takiego urzytkownika';
-
+if(!isset($_SESSION['logged'])){
+    header('Location: index.php');
+    exit();
 }
 
-}
+
+
+
+?>
+
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title></title>
+        <link rel="stylesheet" href="web/css/bootstrap.css" >
+    </head>
+    <body style="background-color: #bee5eb">
+        
+        <?php echo "<p>Witaj "  . $_SESSION['user'] . ' <a href="logout.php">Wyloguj Sie</a> <p>'; ?>
+        
+        
+                <form action="tweet.php" method="post" class="form-group">
+                <label>Treść<br><input type="text" style="width:200px; height:50px;" name="comments"></label></br>     
+                <input class="btn-light" type="submit" value="Dodaj Wpis" > 
+                </form>
+        
+        
+        
+        
+        <div class="container">
+            <div><img src="web/img/logo.png" ></div>
+                <div class="well">
+                    
+                    <?php   
+                    
+                    include_once 'public/admin/loadAllComments.php';
+                    
+                    foreach ($result as $row) {
+                        
+                        
+  
+                        $comments = $row->getComments();
+                        echo '<div class="media"><div class="media-body" style="background-color: white">' . $comments . '</div></div>';
+                        
+                    }
+                    
+                    
+                    ?>
+    
+
+                    
+                </div>
+        </div>
+
+    </body>
+</html>
+

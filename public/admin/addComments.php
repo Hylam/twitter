@@ -5,12 +5,11 @@
 include_once __DIR__ .  '/../connection.php';
 include_once __DIR__ .  '/../autoload.php';
  
-$user = new User();
-$user->setEmail($email);
-$user->setUsername($username);
-$user->setHashPassword($pass);
+$new_comments = new Comments();
+$new_comments->setComments($comments);
+$new_comments->setUser_id($username);
 
-$result = $user->save($connection);
+$result = $new_comments->save($connection);
 
 
  

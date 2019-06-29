@@ -1,7 +1,9 @@
 <?php
- 
-include_once __DIR__ . '/../src/User.php';
-include_once __DIR__ . '/../src/Comments.php';
+
+session_start();
+session_unset();
+header('Location: index.php');
+
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

@@ -6,72 +6,40 @@ and open the template in the editor.
 -->
 
 <?php
-        
-$action="";
-$nouser="";
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+       
+session_start();
 
-$name ="";
-$pass ="";
-
-
-if (isset($_POST['username']) === true && isset($_POST['pass']) === true) 
-    {
-    $name = $_POST['username'];
-    $pass = $_POST['pass'];
-    
-    require_once 'public/connection.php';
-    
-    $sql = "SELECT id, username, hash_password FROM Users";
-    $result = $connection->query($sql);
-    
-    $table = $result->fetchAll(PDO::FETCH_ASSOC);
-    
-    foreach($table as $row){
-        
-    if($row['username']== $name = $_POST['username'] &&  $row["hash_password"] == $_POST['pass'])
-        {
-         $action = 'main.php';
-        }
-        else{$nouser = "nie ma takiego użytkownika";}
-        
-          
-    }
-    
-   /*  $result = $connection->query($sql);
-
-    foreach($result as $row) {
-
-    // Wypisz na ekran dane
-    echo(" id: " . $row['id']);
-    echo "<br>";
-    echo(" login: " . $row['username']); 
-    echo "<br>";
-    echo (" hasło: " . $row['hash_password']) ;
-    echo "<br>";
-
-    }  
-    echo "  $name + $pass";
-    */
-    } 
+if((isset($_SESSION['logged'])) && ($_SESSION['logged'] = TRUE))
+{
+    header('Location: main.php');
+    exit();
 }
-                   
+
         ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <link rel="stylesheet" href="web/css/bootstrap.min.css" >
     </head>
-    <body>
-        <div>
-            <form action="<?php echo "$action" ?>" method="post">
+    <body style="background-color: #bee5eb">
+        <div class="container">
+            <div><img src="web/img/logo.png" ></div>
+                <div class="container">
+                    <form action="login.php" method="post" class="form-group">
                 <label>Login <input type="text" name="username"></label></br>
-                <label>Hasło <input type="password" name="pass"></label></br>
-                
-                <input type="submit" value="Zaloguj">   
-            </form>
-            <button><a href="register.php">Utwórz Konto</a></button>
-            <?php echo "<br> $nouser" ?>
+                <label>Hasło <input type="password" name="pass"></label></br>      
+                <input class="btn-light" type="submit" value="Zaloguj" > 
+                <button><a class="btn-light" href="register.php">Utwórz Konto</a></button>
+                </form>
+                    <?php
+                    
+                    If(isset($_SESSION['blad']))
+                        echo $_SESSION['blad'];
+                    
+                    ?>
+                    
+                </div>
         </div>
 
     </body>
