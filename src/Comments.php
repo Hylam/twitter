@@ -18,6 +18,11 @@ class Comments {
     private $user_id;
     private $comments;
     
+        public function __construct()
+    {
+        $this->comments_id = -1;
+    }
+    
     function getComments_id() {
         return $this->comments_id;
     }
@@ -45,10 +50,8 @@ class Comments {
     public function save(PDO $pdo)
     {
         if ($this->comments_id == -1) {
-            // przygotowanie zapytania
-            
-          
-            $sql = "INSERT INTO `Comments` (`user_id`, `comments`) VALUES (:user_id, :comments)";
+ 
+            $sql = "INSERT INTO Comments(user_id, comments) VALUES (:user_id, :comments)";
  
             $prepare = $pdo->prepare($sql);
             // Wysłanie zapytania do bazy z kluczami i wartościami do podmienienia
@@ -91,6 +94,32 @@ class Comments {
         return null;
         
         }
+        
+        static public function loadCommentsByUser(PDO $connecion, $user_id) {
+                
+            $stmt = $connecion->prepare('SELECT * FROM Comments WHERE user_id=:user_id');
+            $result = $stmt->execute(['user_id' => $user_id]);
+
+            $ret = [];
+
+            if ($result === true && $stmt->rowCount() != 0) {
+
+                 foreach ($stmt as $row) {
+                    $loadedCommentsByUser = new Comments();
+                    $loadedCommentsByUser->comments_id = $row['comments_id'];
+                    $loadedCommentsByUser->comments = $row['comments'];
+                    $loadedCommentsByUser->user_id = $row['user_id'];
+
+                    $ret[] = $loadedCommentsByUser;
+
+                    }
+
+            }
+
+            return $ret;
+    
+    
+            }
     
         static public function loadAllComments(PDO $connecion) {
                 

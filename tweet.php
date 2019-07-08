@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION['logged'])){
+    header('Location: index.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
@@ -11,10 +16,11 @@ if (isset($_POST['comments']) === true )
     $username = $_SESSION['id'];
     $comments = $_POST['comments'];
     
-    include_once 'public/admin/addUser.php';
-    include_once 'public/admin/addComments.php';
-    header('Location: main.php');
-    $connection->close();
+   include 'public/admin/addComments.php';
+    
+    
+   header('Location: main.php');
+    
 
    }
    

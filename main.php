@@ -19,6 +19,8 @@ if(!isset($_SESSION['logged'])){
         <link rel="stylesheet" href="web/css/bootstrap.css" >
     </head>
     <body style="background-color: #bee5eb">
+                <div class="container">
+            <div><img src="web/img/logo.png" ></div>
         
         <?php echo "<p>Witaj "  . $_SESSION['user'] . ' <a href="logout.php">Wyloguj Sie</a> <p>'; ?>
         
@@ -31,8 +33,7 @@ if(!isset($_SESSION['logged'])){
         
         
         
-        <div class="container">
-            <div><img src="web/img/logo.png" ></div>
+
                 <div class="well">
                     
                     <?php   
@@ -40,22 +41,35 @@ if(!isset($_SESSION['logged'])){
                     include_once 'public/admin/loadAllComments.php';
                     
                     foreach ($result as $row) {
-                        
-                        
-  
+
                         $comments = $row->getComments();
-                        echo '<div class="media"><div class="media-body" style="background-color: white">' . $comments . '</div></div>';
+                        $id = $row->getUser_id();
+                        
+                    include 'public/admin/loadUserByID.php';    
+                        
+                        $id = $result->getUsername();
+                        $user_id = $result->getId();
+                        
+                        
+                        echo '<div class="media">
+                             
+                              <div class="media-body"><form action="user.php" method="post"> <input type = "hidden" name="id" value = "'. $user_id .'"><input type="submit" value="' . $id .'"></form></div>
+                              <div class="media-body" style="background-color: white">' . $comments . ' </div>
+                              <form action="tweet_page.php" method="post"> <input type = "hidden" name="comment_id" value = "'. $id .'"><input type="submit" value="odpowiedz"></form>
+                              <br>
+                              </div><br>';
                         
                     }
                     
                     
                     ?>
-    
 
+  
                     
                 </div>
         </div>
 
     </body>
 </html>
+
 

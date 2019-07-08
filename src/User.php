@@ -77,6 +77,28 @@ class User
         }
  
     }
+    
+        static public function loadUserByID(PDO $connecion, $id) {
+        
+        $stmt = $connecion->prepare('SELECT * FROM Users WHERE id=:id');
+        $result = $stmt->execute(['id' => $id]);
+        
+        if ($result === true && $stmt->rowCount() > 0) {
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $loadUsers = new User();
+        $loadUsers->id = $row['id'];
+        $loadUsers->username = $row['username'];
+        $loadUsers->email = $row['email'];
+
+        return $loadUsers;
+
+        }
+
+        return null;
+        
+        }
 }
 
 /* 
