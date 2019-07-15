@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['logged'])){
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 
@@ -16,10 +16,10 @@ if (isset($_POST['comments']) === true )
     $username = $_SESSION['id'];
     $comments = $_POST['comments'];
     
-   include 'public/admin/addComments.php';
+   include '../public/admin/addComments.php';
     
     
-   header('Location: main.php');
+   header('Location: ../main.php');
     
 
    }

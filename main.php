@@ -22,10 +22,10 @@ if(!isset($_SESSION['logged'])){
                 <div class="container">
             <div><img src="web/img/logo.png" ></div>
         
-        <?php echo "<p>Witaj "  . $_SESSION['user'] . ' <a href="logout.php">Wyloguj Sie</a> <p>'; ?>
+        <?php echo "<p>Witaj "  . $_SESSION['user'] . ' <a href="../logout.php">Wyloguj Sie</a> <p>'; ?>
         
         
-                <form action="tweet.php" method="post" class="form-group">
+            <form action="Scripts/tweet.php" method="post" class="form-group">
                 <label>Treść<br><input type="text" style="width:200px; height:50px;" name="comments"></label></br>     
                 <input class="btn-light" type="submit" value="Dodaj Wpis" > 
                 </form>

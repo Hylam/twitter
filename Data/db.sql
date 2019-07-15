@@ -31,6 +31,18 @@ CREATE TABLE IF NOT EXISTS `Users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
+CREATE TABLE IF NOT EXISTS `Inbox` (
+  `message_id` int(11) AUTO_INCREMENT NOT NULL,
+  `receiver` int(11) NOT NULL,
+  `message` longtext,
+  `sender` int(11) NOT NULL,
+  `ready` tinyint(1) NOT NULL,
+  `date` text NOT NULL
+   PRIMARY KEY (`message_id`),
+   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+
 ## Ładowanie bazy
  
 ``mysql -uUŻYTKOWNIK -p NAZWA_BAZY < data/db.sql``

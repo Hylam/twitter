@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION['logged'])){
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 
@@ -19,14 +19,16 @@ if (isset($_POST['receiver'])  === true && isset($_POST['message']) === true )
     $date = new DateTime();
     $date = $date->format('Y-m-d H:i:s');
     
-    echo $sender . '  ' . $receiver . '  ' . $message . $date;
-    
-    include_once 'public/admin/addMessage.php';
-    
-    echo $new_message->getMessage() . $new_message->getReceiver() . $new_message->getSender() . $new_message->getDate();
+    //echo $sender . '  ' . 
     
     
-   header('Location: main.php');
+    
+    include_once '../public/admin/addMessage.php';
+    
+    echo  $new_message->getSender() . "  " . $sender;
+    
+
+   header('Location: ../main.php');
     
 
    }

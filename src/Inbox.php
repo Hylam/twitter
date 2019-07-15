@@ -22,7 +22,7 @@ class Inbox {
     
     public function __construct()
     {
-        $this->message_id = -1;
+        $this->message_id = -5;
         $this->ready = 0;
     }
     
@@ -79,23 +79,21 @@ class Inbox {
     
         public function save(PDO $pdo)
     {
-        if ($this->message_id == -1) {
+        if ($this->message_id !== -1) {
+            
+            //"INSERT INTO `Inbox` (`message_id`, `receiver`, `message`, `sender`, `ready`, `date`) VALUES (NULL, '2', 'mati', '3', '1', '')";
                    // INSERT INTO `Inbox` ( `receiver`, `message`, `sender`, `date`) VALUES ('2', 'bgnnhnh', '4', '2019-07-04 05:13:16')
                     //INSERT INTO Inbox(receiver, message, sender, date) VALUES (:receiver, :message, :sender, :date)
-            $sql = "INSERT INTO Inbox(receiver, message, sender, ready, date) VALUES (:receiver, :message, :sender, :ready, :date)";
+            $sql = "INSERT INTO `Inbox`(`message_id`, `receiver`, `message`, `sender`, `ready`, `date`) VALUES (NULL, :receiver, :message, :sender, :ready, :date)";
  
             $prepare = $pdo->prepare($sql);
-            // Wysłanie zapytania do bazy z kluczami i wartościami do podmienienia
             $result = $prepare->execute(
                 [
                     'receiver'    => $this->receiver,
                     'message'     => $this->message,
                     'sender'      => $this->sender,
-                    'ready'       =>$this->ready,
+                    'ready'       => $this->ready,
                     'date'        => $this->date,
-                 
-                    
-                    
                 ]
             );
  
